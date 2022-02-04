@@ -8,42 +8,22 @@
 
 window.onload = function () {
 
-    // VARIABLE - MAKE POP INTO BOOLEON
     let emailState = false
 
-    // VARIABLE - GET THE CLASS NAME FOR POPUP MODAL
     let emailModal = document.getElementsByClassName('email-modal') [0]
 
-    // VARIABLE - GET THE CLASS NAME TO CLOSE MODAL
-    let closeModal = document.getElementsByClassName('email-modal__close-btn') [0]
+    let closeButton = document.getElementsByClassName('email-modal__close-btn') [0]
 
-    // VARIABLE - INPUT EMAIL
     let emailInput = document.getElementsByClassName('email-modal__input') [0]
 
-    // VARIABLE - EMAIL BUTTON
     let emailButton = document.getElementsByClassName('email-modal__button') [0]
 
-
-    // EMAIL IS VALID FUNCTION
-    function emailIsValid (email) {
-        return /\S+@\S+\.\S+/.test(email)
-      }
-
-    // EMAIL VALIDATION INPUT BUTTON FUNCTION
-    emailButton.addEventListener('click', () => {
-        if (emailIsValid(emailInput.value)) {
-
-            console.log(emailInput.value)
-        } else {
-            alert('this is not a valid email')
-        }
-    })
+    let thankContainer = document.getElementsByClassName('email-modal_thank') [0]
 
 
-
-    // VARIABLE - SHOW MODAL FUNCTION
-    let showModal = () => {
-    // USEING IF TO MAKE SURE MODAL DOES NOT OPEN AGAIN AFTER IT GETS CLOSED OUT
+     // VARIABLE - SHOW MODAL FUNCTION
+ let showModal = () => {
+    // USEING IF STATEMENT TO MAKE SURE MODAL DOES NOT OPEN AGAIN AFTER IT GETS CLOSED OUT BY USING BOOLEAN (TURNING EMAIL STATE FROM FALSE TO TRUE)
         if(emailState == false) {
             // VARIABLE - ADDING A CLASS
             emailModal.classList.add('email-modal--visible');
@@ -51,9 +31,63 @@ window.onload = function () {
         }
     }
 
-    closeModal.addEventListener('click', () => {
-        emailModal.classList.remove('email-modal--visible');
+
+
+    // ADD ERRORS FUNCTION
+
+    let addErrors = () => {
+        document.getElementsByClassName('email-modal__form-group')[0].classList.add('email-modal__form-group--error')
+            
+        document.getElementsByClassName('email-modal__error-message')[0].classList.add('email-modal__error-message--active')
+
+    }
+
+    // REMOVE ERRORS FUNCTION
+
+    let removeErrors = () => {
+        document.getElementsByClassName('email-modal__form-group')[0].classList.remove('email-modal__form-group--error')
+            
+        document.getElementsByClassName('email-modal__error-message')[0].classList.remove('email-modal__error-message--active')
+
+    }
+
+    // REMOVE ERROR WARNING AFTER USER CLICKS ON INPUT
+    emailInput.addEventListener('click', () => {
+        // REMOVE ERRORS FUNCTION
+        removeErrors ();
     } )
+    
+
+
+    // EMAIL IS VALID FUNCTION
+    function emailIsValid (email) {
+        return /\S+@\S+\.\S+/.test(email)
+      }
+
+    // FUNCTION TO CLOSE MODAL
+    let closeModal = () => {
+        emailModal.classList.remove('email-modal--visible');
+    }
+
+    // EMAIL VALIDATION INPUT BUTTON FUNCTION
+    emailButton.addEventListener('click', () => {
+        if (emailIsValid(emailInput.value)) {
+
+            console.log(emailInput.value)
+        } else {
+            
+            addErrors()
+     
+        }
+    })
+
+
+
+   
+
+        closeButton.addEventListener('click', () => {
+            closeModal()
+        } )
                 // FUNCTION FOR WHEN MOUSE LEAVES PAGE
         document.body.addEventListener('mouseleave', () => {
             // TRIGGER THE FUNCTION

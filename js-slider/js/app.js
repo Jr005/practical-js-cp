@@ -33,9 +33,15 @@ let init = () => {
   let startSliding = () => {
     //   SET INTERVAL - FOREVER LOOP - THIS WILL RUN EVERY 6 SECONDS
     setInterval(() => {
-      console.log(`current: ${current}`);
+      // REMOVE FROM ACTIVE FROM FIRST AND ADD IT TO THE SECOND SLIDE SO IT CAN BERCOME THE FIRST SLIDE WITH THE CLASS ACTIVATED
+      //   console.log(`current: ${current}`);
       slides[1].classList.add("jumbo-slider__slide--active");
       slides[0].classList.remove("jumbo-slider__slide--active");
+
+      //   Clone the first slide and place on the last space
+      container.appendChild(slides[0].cloneNode([true]));
+      //   then remove the first slide after it has been cloned
+      container.removeChild(slides[0]);
 
       //   HOW TO CHECK AND SEE HOW MANY SLIDES ARE IN SLIDE VARIABLE
       //   console.log(`slides: ${slides.length}`);
@@ -45,9 +51,8 @@ let init = () => {
         updateNav(current);
       } else {
         current = 1;
+        updateNav(current);
       }
-      container.appendChild(slides[0].cloneNode([true]));
-      container.removeChild(slides[0]);
     }, time);
   };
   startSliding();
